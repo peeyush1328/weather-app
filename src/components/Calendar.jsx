@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 const CalendarComponent = ({ date, setDate }) => {
   const [open, setOpen] = useState(false);
-
   const handleSelect = (range) => {
     setDate(range);
     if (range?.from && range?.to) {
