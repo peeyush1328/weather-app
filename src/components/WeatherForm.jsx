@@ -26,17 +26,31 @@ export default function WeatherForm({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!isValidLatLon(form.latitude) || !isValidLatLon(form.longitude)) {
+      alert("Invalid latitude or longitude.");
+      return;
+    }
+
+    if (!date?.from || !date?.to) {
+      alert("Please select both a start and end date.");
+      return;
+    }
+
+    if (new Date(date.to) < new Date(date.from)) {
+      alert("End date cannot be before start date.");
+      return;
+    }
+
     const payLoad = {
       ...form,
-      startDate: trimDate(date?.from),
+      startDate: trimDate(date.from),
       endDate: trimDate(date.to),
     };
-    if (isValidLatLon(form.latitude) && isValidLatLon(form.longitude)) {
-      onSubmit(payLoad);
-    } else {
-      alert("Invalid latitude or longitude.");
-    }
+
+    onSubmit(payLoad);
   };
+
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

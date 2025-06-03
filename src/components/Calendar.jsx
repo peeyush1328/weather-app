@@ -11,9 +11,17 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
 const CalendarComponent = ({ date, setDate }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleSelect = (range) => {
+    setDate(range);
+    if (range?.from && range?.to) {
+      setOpen(false); // close popover after second date
+    }
+  };
   return (
     <div className="lg:w-3/5">
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             className={cn(
@@ -42,16 +50,13 @@ const CalendarComponent = ({ date, setDate }) => {
             </div>
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          className="p-0 w-[--radix-popover-trigger-width] max-w-full"
-          align="start"
-        >
+        <PopoverContent className="p-0 w-auto" align="start">
           <Calendar
             mode="range"
             selected={date}
             sideOffset={4}
-            defaultMonth={new Date()}
-            onSelect={setDate}
+            defaultMonth={date?.to || new Date()}
+            onSelect={handleSelect}
             className="rounded-md border shadow bg-white calendar w-full"
             initialFocus
             numberOfMonths={2}

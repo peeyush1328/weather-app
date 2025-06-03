@@ -34,7 +34,7 @@ export default function App() {
   const handleSubmit = (formData) => setParams(formData);
 
   return (
-    <div className="p-4 flex flex-col gap-10">
+    <div className="p-4 flex flex-col gap-10 mb-10">
       <h1 className="text-3xl text-center font-bold">Weather Dashboard</h1>
       <WeatherForm
         onSubmit={handleSubmit}
